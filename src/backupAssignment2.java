@@ -240,25 +240,32 @@ public class Steganographer extends Picture
 		Steganographer charBuff = new Steganographer(fileName);
 		char[] charArray = charBuff.stringToCharArray(fileName);
 		
+//		BufferedCharTemp charBuff =  new BufferedCharTemp(fileInput);
+//		//System.out.println(charBuff);		// debug
+//		char[] charArray = charBuff.stringToCharArray(fileInput);
 		
 		Pixel[] pixelArray = this.getPixels();
+		//Pixel value = null;
 		Pixel currPixel = null;
-		
-		// writing section
-		Pixel writePixels = null;
-		
-
+		//Pixel pixel = null;
+		//Pixel writePixels = null;
+		//int x,y;
 		int numCount = 0;
 		int colorValue = 0;
-		int x = 0;				// char to value conversion 
+		int x = 0;	// char to value conversion 
 		int charArrayCount = 0;
 		
 		// max buffersize
 		int bufferSize = charArray.length;
 		
-		// 
+		//BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+		
+		
+		
 		for ( int i = 0; i < pixelArray.length; i++)
 		{
+			
+			
 			
    			
    			if ( i % 100 == 0 && charArrayCount < (int)bufferSize)
@@ -283,60 +290,6 @@ public class Steganographer extends Picture
    			}
 
 		}
-		
-		//// Attempting to write to file
-		/*
-		try 
-		{
-			
-			BufferedImage img = null;
-		
-			
-		// retrieve image
-	    //BufferedImage bi = getMyImage();
-			img = ImageIO.read(new File("strawberry.jpg"));
-	    File outputfile = new File("saved.png");
-	    ImageIO.write(img, "png", outputfile);
-		} catch (Exception ex) 
-		{
-			ex.printStackTrace();
-		} 
-		*/
-		
-		
-		// the writer does not like writing int to Pixel type. will write the file to disk, however it contains no data
-		try 
-	      {
-	
-		 File file = new File("/Users/Shared/Java-Libraries/CourseCD/results/myWRITEDEMOfile.png");
-		 
-
-		  FileWriter fileWrite = new FileWriter(file);
-		  BufferedWriter writer = new BufferedWriter(fileWrite);
-		  //BufferedImage bImage = ImageIO.write(fileWrite);
-		  
-		  
-		  
-		  for ( int i = 0; i < pixelArray.length; i++)
-		  {
-			  writePixels = pixelArray[i];
-			  int getRed = writePixels.getRed();
-			  int getGreen = writePixels.getGreen();
-			  int getBlue = writePixels.getBlue();
-			  writePixels.setColor(writePixels.getColor());
-			  System.out.println(writePixels);
-			  
-			 // writer.write(writePixels.setColor(writePixels.getColor()));
-		  }
-		  
-		  //writer.write(charArray);
-	          System.out.println("File written Successfully");
-
-	      } catch (Exception ex) 
-	      {
-		   ex.printStackTrace();
-		  } 
-		
 
 	}
 	
@@ -402,10 +355,10 @@ public class Steganographer extends Picture
 
 		
 		// decoding message hidden within file
-		//steganObj.decodePicture();
+		steganObj.decodePicture();
 
 
-		
+		//steganObj.encodePicture(charArray);
 		
 		
 		
