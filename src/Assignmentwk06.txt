@@ -1,0 +1,87 @@
+Java II
+Assignment 6
+
+Secret Message
+
+Steganography is a technique of encoding a text message into a picture. Create a Steganographer class. 
+Write a method for this class called "encode" that accepts a text filename, a Picture filename, and a target 
+filename as arguments. The "encode" function should blend the text from the text file in a regulated manner 
+to create a target Picture file. Write a function called "decode" that accepts an encoded Picture filename as an 
+argument, decodes the Picture data, and prints the text to the user. Write a “main” method that demonstrates the 
+encoding and decoding of a secret message.
+
+Hint: The easy way to approach this is to cast your char values as ints (encoding), and then subsequently cast 
+your int values as chars (decoding). By spreading your encoding across your images file, you’ll make it less likely 
+that your message can be seen as a visual anomaly.
+
+Caveat: The “.jpg” image format is a “lossy” format, in that when is saves it compresses and loses information. 
+Therefore, you should use the “.png” format instead—it is “non-lossy”. 
+
+Submit the all .java files, along with the support files used to test your code. Submit these files together 
+as a single zipped attachment. Please use the zip format (not .rar or any other format).
+
+---------------------------------Additional notes:----------------------------------------------
+
+August 5, 2015 10:50 AM
+Hi All,
+In the interest of helping out a little more with this assignment, consider the following...
+Java characters are represented as 16 bits. Actually, everything in the computer is represented as binary digits (i.e. bits) regardless of 
+which language you use. Statements, objects, data,... they're all just an orderly assortment of bits. For Java characters, 16 bits are used 
+to map to a rather large table of characters to support multiple human languages and even graphical characters.
+
+With direct reference to our Steganography assignment, a "char" can easily be converted to an int via casting...
+
+char c;
+c = 'A';
+
+int i;
+i = (int) c;
+
+When you "cast" like this, you are just changing the way the the bits are interpreted. They're still the same bits, but they "mean" something 
+different now. The term "cast" was actually borrowed from theater. When a person is "cast" in a role, their words and behavior are interpreted 
+in the context of that role.
+
+Once you an int value, you can use that value to set one of the RGB values of a pixel. Remember the assignment you did in where you manipulated 
+the red, green, and blue values of your Picture values?
+
+You won't want to change pixel values for pixels that are right next to each other, since the human eye will then have an increased chance of 
+being able to detect an anomaly in the Picture. Instead, use an interval offset. For example, you could start at a fixed location in the Picture, 
+and then change an RGB value (red, for example) and then skip 10 pixels, set that pixel's red component, then skip another 10 pixels, etc.
+
+To decode, you can easily convert an "int" value to a "char" via casting...
+
+c = (char) c;
+
+It really is that simple!
+Hope this helps!
+Best Regards,
+Duane
+
+August 8, 2016 1:28 PM
+Hi All,
+
+With Assignment 6, you might encounter a compile error that has to do with "javazoom" package. While the "javazoom" package can be found 
+and downloaded from the web, it has already been provided to you in your MediaComputation "bookClasses" folder. You'll need to ensure 
+that the "javazoom" directory is included in your CLASSPATH definition. This should get your past this problem.
+
+By the way, I don't check my email as often as the Discussion Forum, and it takes me a lot more time to respond to an email message as 
+compared to a Discussion Forum post. It's a whole lot easier and faster to respond to a discussion post directly. Therefore, please give 
+preference to communicating via the Discussion Forum as opposed to email.
+
+Hope this helps!
+
+Best Regards,
+
+Duane
+
+August 15, 2015 10:34 AM
+Hi All,
+I'd like to clarify just a little more regarding this assignment. Consider a single pixel within the image of your Picture object. 
+It is comprised of three colors, corresponding to red, green, and blue (RGB). Let's just take the red color component of that pixel. 
+The numerical values for red range from 0 to 255. It so happens that the char values used to represent the english alphabet fall easily 
+with that range of 0 to 255. That's what enables the simple approach of casting a char value to an int value, and using that value to 
+set the red component of a pixel (of course, you could use green or blue, if you prefer). In other words, the letter "j" when converted 
+to an int is a specific shade of red, and "k" is just ever so slightly darker.
+I hope this makes sense!
+Best Regards,
+Duane
