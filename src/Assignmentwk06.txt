@@ -1,3 +1,7 @@
+Notes: research:
+http://beginwithjava.blogspot.com/2011/04/java-file-save-and-file-load-objects.html
+
+
 Java II
 Assignment 6
 

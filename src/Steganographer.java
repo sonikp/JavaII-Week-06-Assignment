@@ -238,7 +238,7 @@ public class Steganographer extends Picture
 		char[] charArray = charBuff.stringToCharArray(fileName);
 		
 		// create a pixel array
-		Pixel[] pixelArray = this.getPixels();
+		Pixel[] pixelArray = this.getPixels();		//this.getPixels();
 		Pixel currPixel = null;
 		
 		// writing section the writing pixels for BufferedWriter
@@ -305,11 +305,17 @@ public class Steganographer extends Picture
 		try 
 	      {
 	
-		 File file = new File("/Users/Shared/Java-Libraries/CourseCD/results/myWRITEDEMOfile.png");
+		 String file = new String("/Users/Shared/Java-Libraries/CourseCD/results/myWRITEDEMOfile.png");
 		 
-
-		  FileWriter fileWrite = new FileWriter(file);
-		  BufferedWriter writer = new BufferedWriter(fileWrite);
+		 // original
+//		  FileWriter fileWrite = new FileWriter(file);
+//		  BufferedWriter writer = new BufferedWriter(fileWrite);
+		 
+		 // not applicable for the arguments (void). Should I be using static, cannot use this.getPixels()
+		 
+		 // when writing bytes use OutputStream :: same issue
+		  FileOutputStream saveFile = new FileOutputStream(file);
+		  ObjectOutputStream writer = new ObjectOutputStream(saveFile);
 		  		  
 		  for ( int i = 0; i < pixelArray.length; i++)
 		  {
@@ -317,16 +323,32 @@ public class Steganographer extends Picture
 			  int getRed = writePixels.getRed();
 			  int getGreen = writePixels.getGreen();
 			  int getBlue = writePixels.getBlue();
-			  writePixels.setColor(writePixels.getColor());
+			  writePixels.setColor(writePixels.getColor());	// why is this type void
 			  
+			  //String numberAsString = Integer.toString(writePixels.setColor(writePixels.getColor()));
+     		  //String numberAsString = String.valueOf((writePixels.setColor(writePixels.getColor())));
+			  //String numberAsString = String.copyValueOf((writePixels.setColor(writePixels.getColor())));
+			  
+			  
+//			  StringBuffer sb = new StringBuffer();
+//			  sb.append(writePixels.setColor(writePixels.getColor()));
+//			  String numberAsString = sb.toString();
 			  
 			  //System.out.println(writePixels);		// I can call and step through the pixels
 			  //System.out.println(charArray[i]);		// I can call the charArray
 			  //writer.write(charArray[i]);				// I can't write to the file but I don't get a type error and I can write an empty file to the folder.
-			  writer.write(pixelArray.length);			// I can write this to the file, and it completes, don't know what the 1.5MB is however
+			 // writer.write(pixelArray.length);			// I can write this to the file, and it completes, don't know what the 1.5MB is however
 			  
 			  // I am stuck here: The method write(int) in the type BufferedWriter is not applicable for the arguments (void)
-			  //writer.write(writePixels.setColor(writePixels.getColor()));
+			 // writer.write(writePixels.setColor(writePixels.getColor()));
+			  //writer.write(String.valueOf(writePixels.setColor(writePixels.getColor())));	// tried converting it to a string value
+
+//			  Picture p = new Picture();
+//			  p.write(file);
+//			  String string = String.valueOf(i);
+//			  String string = Integer.toString(i);
+			  
+			  
 		  }
 		  
 		 
