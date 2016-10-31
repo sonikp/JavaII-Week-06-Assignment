@@ -53,7 +53,8 @@ public class Steganographer extends Picture
 	////////////methods//////////////////
 	
 	/**
-	 * Method to read input file and create a character array from the
+	 * Method to convert string information and character array.
+	 * This method reads input file and create a character array from the
 	 * message
 	 * @param fileName containing the message to hide inside the picture
 	 * @return charArray character array containing the message as a 
@@ -64,7 +65,6 @@ public class Steganographer extends Picture
 		// creates a file buffer
 		File f = new File(fileName);
 		long bufferSize = f.length();
-		System.out.println(bufferSize);
 		
 		// creates a character array
 		char[] charArray = null;
@@ -181,17 +181,16 @@ public class Steganographer extends Picture
 	
 	/**
 	 * Method to encode a secret text message into a picture file
+	 * This method take the return of the output of the character array
+	 * if called directly from the main method
 	 */
 	
 	// current working method although the prime numbers creates too many pixels
 	public void encodePicture(char[] charArray)
 	{
 		Pixel[] pixelArray = this.getPixels();
-		//Pixel value = null;
 		Pixel currPixel = null;
-		//Pixel pixel = null;
-		//Pixel writePixels = null;
-		//int x,y;
+
 		int numCount = 0;
 		int colorValue = 0;
 		int x = 0;	// char to value conversion 
@@ -200,34 +199,24 @@ public class Steganographer extends Picture
 		// max buffersize
 		int bufferSize = charArray.length;
 		
-		//BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
-		
-		
-		
+		// step through the pixels in the array
 		for ( int i = 0; i < pixelArray.length; i++)
 		{
 			
-			
-			
-   			
+			// determine how to hid the message within the picture. Was using primeNumbers, however there are too many of these and it effects the picture display
    			if ( i % 100 == 0 && charArrayCount < (int)bufferSize)
    			{
-   				//System.out.println(i);
+   				// get blue color from each of the 100th pixel
    				currPixel = pixelArray[i];
-   				//System.out.println(i);
    	   			colorValue = currPixel.getBlue();
    	   			
-	   	 		
+	   	 		// step through the character array and take each consecutive character
 	   			x = (int) charArray[charArrayCount];
-	   			//shows chars for message
-//	   			System.out.println(x);
-   	   			
-   	   			//System.out.println(colorValue);
+
+	   			// set character as blue value for the 
    	   			currPixel.setBlue(x);
-   	   			// shows byte output for message
-//   	   			System.out.println(currPixel.getBlue());
    	   			
-   	   			
+   	   			// character array counter
    	   			charArrayCount++;
    			}
 
@@ -235,19 +224,27 @@ public class Steganographer extends Picture
 
 	}
 	
+	/**
+	 * Method to encode a secret text message into a picture file
+	 * This method takes the text file to be encoded.
+	 * if called directly from the main method
+	 * @param filename file containing the message to be encoded
+	 */
+	
 	public void encodePicture(String fileName)
 	{
+		// create character object to retrieve the character array
 		Steganographer charBuff = new Steganographer(fileName);
 		char[] charArray = charBuff.stringToCharArray(fileName);
 		
-		
+		// create a pixel array
 		Pixel[] pixelArray = this.getPixels();
 		Pixel currPixel = null;
 		
-		// writing section
+		// writing section the writing pixels for BufferedWriter
 		Pixel writePixels = null;
 		
-
+		// debug variables variables to reduce the decoded array size
 		int numCount = 0;
 		int colorValue = 0;
 		int x = 0;				// char to value conversion 
@@ -256,11 +253,11 @@ public class Steganographer extends Picture
 		// max buffersize
 		int bufferSize = charArray.length;
 		
-		// 
+		// to step through the picture array
 		for ( int i = 0; i < pixelArray.length; i++)
 		{
 			
-   			
+   			// encoding method, I've left all this debug code on purpose. The write function is not yet working
    			if ( i % 100 == 0 && charArrayCount < (int)bufferSize)
    			{
    				//System.out.println(i);
@@ -284,7 +281,7 @@ public class Steganographer extends Picture
 
 		}
 		
-		//// Attempting to write to file
+		//// Attempting to write to file using BufferedImage writer
 		/*
 		try 
 		{
@@ -294,7 +291,7 @@ public class Steganographer extends Picture
 			
 		// retrieve image
 	    //BufferedImage bi = getMyImage();
-			img = ImageIO.read(new File("strawberry.jpg"));
+		img = ImageIO.read(new File("strawberry.jpg"));
 	    File outputfile = new File("saved.png");
 	    ImageIO.write(img, "png", outputfile);
 		} catch (Exception ex) 
@@ -313,10 +310,7 @@ public class Steganographer extends Picture
 
 		  FileWriter fileWrite = new FileWriter(file);
 		  BufferedWriter writer = new BufferedWriter(fileWrite);
-		  //BufferedImage bImage = ImageIO.write(fileWrite);
-		  
-		  
-		  
+		  		  
 		  for ( int i = 0; i < pixelArray.length; i++)
 		  {
 			  writePixels = pixelArray[i];
@@ -324,12 +318,18 @@ public class Steganographer extends Picture
 			  int getGreen = writePixels.getGreen();
 			  int getBlue = writePixels.getBlue();
 			  writePixels.setColor(writePixels.getColor());
-			  System.out.println(writePixels);
 			  
-			 // writer.write(writePixels.setColor(writePixels.getColor()));
+			  
+			  //System.out.println(writePixels);		// I can call and step through the pixels
+			  //System.out.println(charArray[i]);		// I can call the charArray
+			  //writer.write(charArray[i]);				// I can't write to the file but I don't get a type error and I can write an empty file to the folder.
+			  writer.write(pixelArray.length);			// I can write this to the file, and it completes, don't know what the 1.5MB is however
+			  
+			  // I am stuck here: The method write(int) in the type BufferedWriter is not applicable for the arguments (void)
+			  //writer.write(writePixels.setColor(writePixels.getColor()));
 		  }
 		  
-		  //writer.write(charArray);
+		 
 	          System.out.println("File written Successfully");
 
 	      } catch (Exception ex) 
@@ -389,7 +389,7 @@ public class Steganographer extends Picture
 		// Files (two) containing the message to be encoded into picture
 		String fileInput = FileChooser.getMediaPath("LittleMessage.txt");		// 	two messages (short)
 		//String fileInput = FileChooser.getMediaPath("SecretMessage.txt");		// 	two messages (long)
-
+		Picture p = new Picture();
 		
 		
 		// Picture file to be used for hiding the encoded message
@@ -402,70 +402,10 @@ public class Steganographer extends Picture
 
 		
 		// decoding message hidden within file
-		//steganObj.decodePicture();
-
-
-		
-		
-		
-		
-		/// Image io write works but not using the results from the encoded output
-		/*
-		File image = new File("/Users/Shared/Java-Libraries/CourseCD/mediasources/gokart.png");
-    	//ImageIOExample image = new ImageIOExample();
-    	Steganographer encodedImage = new Steganographer(image);
-    	encodedImage.imageIoWrite(image);
-    	*/
-		
-		/*
-		steganObj.imageIoWrite(steganObj.encodePicture(charArray));
-		String resultFile = "/Users/Shared/Java-Libraries/CourseCD/results/image.png";
-		Steganographer encodedImage = new Steganographer(resultFile);
-		encodedImage.explore();
-		//steganObj.clearBlue3(steganObj);
-		*/
-		
-		/*
-		//Working main method from above saved as backup. Saved before cleanup
-		
-				//create objects
-		String writeLocation = "/Users/Shared/Java-Libraries/CourseCD/results/";
-		FileChooser.setMediaPath("/Users/Shared/Java-Libraries/CourseCD/mediasources/");
-		
-		
-		// get read file and add characters to an array
-		String secretMessage = FileChooser.getMediaPath("LittleMessage.txt");
-		Steganographer stegoMessage = new Steganographer(secretMessage);
-		
-		
-		// String to char array
-		
-		String fileInput = FileChooser.getMediaPath("LittleMessage.txt");		// 	two messages (short)
-		//String fileInput = FileChooser.getMediaPath("SecretMessage.txt");		// 	two messages (long)
-		//BufferedCharTemp charBuff =  new BufferedCharTemp(fileInput);
-		//System.out.println(charBuff);		// debug
-		//char[] charArray = charBuff.stringToCharArray(fileInput);
-		//steganObj.encodePicture(charArray);
-		
-		
-		/// get picture working///////
-		String fileName = FileChooser.getMediaPath("gokart.png");	
-		Steganographer steganObj = new Steganographer(fileName);
-		Picture p = new Picture();
-//		System.out.println(steganObj);
-//		System.out.println("Height:\t" + steganObj.getHeight() + "\tWidth\t" + steganObj.getWidth());
-		steganObj.explore();
-		steganObj.encodePicture(fileInput);
-		steganObj.explore();
 		steganObj.decodePicture();
 
 
-		//steganObj.encodePicture(charArray);
 		
-		
-		
-		
-		*/
 	}
 
 	

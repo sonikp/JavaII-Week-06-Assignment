@@ -482,6 +482,70 @@ public class Steganographer extends Picture
 		
 		*/
 		
+		
+		/*
+		
+		/// Image io write works but not using the results from the encoded output
+		/*
+		File image = new File("/Users/Shared/Java-Libraries/CourseCD/mediasources/gokart.png");
+    	//ImageIOExample image = new ImageIOExample();
+    	Steganographer encodedImage = new Steganographer(image);
+    	encodedImage.imageIoWrite(image);
+    	*/
+		
+		/*
+		steganObj.imageIoWrite(steganObj.encodePicture(charArray));
+		String resultFile = "/Users/Shared/Java-Libraries/CourseCD/results/image.png";
+		Steganographer encodedImage = new Steganographer(resultFile);
+		encodedImage.explore();
+		//steganObj.clearBlue3(steganObj);
+		*/
+		
+		/*
+		//Working main method from above saved as backup. Saved before cleanup
+		
+				//create objects
+		String writeLocation = "/Users/Shared/Java-Libraries/CourseCD/results/";
+		FileChooser.setMediaPath("/Users/Shared/Java-Libraries/CourseCD/mediasources/");
+		
+		
+		// get read file and add characters to an array
+		String secretMessage = FileChooser.getMediaPath("LittleMessage.txt");
+		Steganographer stegoMessage = new Steganographer(secretMessage);
+		
+		
+		// String to char array
+		
+		String fileInput = FileChooser.getMediaPath("LittleMessage.txt");		// 	two messages (short)
+		//String fileInput = FileChooser.getMediaPath("SecretMessage.txt");		// 	two messages (long)
+		//BufferedCharTemp charBuff =  new BufferedCharTemp(fileInput);
+		//System.out.println(charBuff);		// debug
+		//char[] charArray = charBuff.stringToCharArray(fileInput);
+		//steganObj.encodePicture(charArray);
+		
+		
+		/// get picture working///////
+		String fileName = FileChooser.getMediaPath("gokart.png");	
+		Steganographer steganObj = new Steganographer(fileName);
+		Picture p = new Picture();
+//		System.out.println(steganObj);
+//		System.out.println("Height:\t" + steganObj.getHeight() + "\tWidth\t" + steganObj.getWidth());
+		steganObj.explore();
+		steganObj.encodePicture(fileInput);
+		steganObj.explore();
+		steganObj.decodePicture();
+
+
+		//steganObj.encodePicture(charArray);
+		
+		
+		
+		
+		*/
+		
+		*/
+		
+		
 	}
 
 	
